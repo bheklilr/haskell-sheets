@@ -3,12 +3,13 @@ module Data.Sheets.Series
     , newSeries
     ) where
 
+import Data.Int
 import qualified Data.Foldable as F
 
 import qualified Data.Vector as V
 import qualified Data.Text   as T
 
-import Data.Sheets.Idx (Idx, RangeIdx, rangeIdxFrom)
+import Data.Sheets.Idx (Idx, rangeIdxFrom)
 
 
 data Series idx_elem_type elem_type = Series
@@ -23,6 +24,5 @@ data Series idx_elem_type elem_type = Series
 instance Functor (Series idx_elem_type) where
     fmap f (Series names idx values) = Series names idx (fmap f values)
 
-newSeries :: Foldable container => container elem_type -> Series RangeIdx elem_type
-newSeries values = Series [] (rangeIdxFrom values) . V.fromList . F.toList $ values
-
+newSeries :: Foldable container => container elem_type -> Series Int32 elem_type
+newSeries values = Series [] (rangeIdxFrom values) $ V.fromList . F.toList $ values

@@ -35,7 +35,7 @@ newIdx :: Foldable container => container elem_type -> Idx elem_type
 newIdx = Idx [] . V.fromList . F.toList
 
 rangeIdxFrom :: Foldable container => container something -> RangeIdx
-rangeIdxFrom valuesToMakeIndexFor = V.enumFromN 0 (length valuesToMakeIndexFor)
+rangeIdxFrom = newIdx . V.enumFromN 0 . length
 
 named :: [T.Text] -> Idx elem_type -> Idx elem_type
 named new_names idx = idx { _names = new_names }
